@@ -1,0 +1,5 @@
+-- DROP DATABASE IF EXISTS tfgfx;
+
+CREATE DATABASE tfgfx;
+
+USE tfgfx;

@@ -1,0 +1,25 @@
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tfgfx</property>
+        <property name="hibernate.connection.username">root</property>
+
+        <!-- Dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- SQL logging -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <!-- IMPORTANTE: Deshabilitar auto DDL -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Entities -->
+        <mapping class="com.example.tfg_fx.model.entities.Usuario"/>
+        <mapping class="com.example.tfg_fx.model.entities.Administrador"/>
+        <mapping class="com.example.tfg_fx.model.entities.Producto"/>
+        <mapping class="com.example.tfg_fx.model.entities.Comprar"/>
+        <mapping class="com.example.tfg_fx.model.entities.Vender"/>
+    </session-factory>
+</hibernate-configuration>

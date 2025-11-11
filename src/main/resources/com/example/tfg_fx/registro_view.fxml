@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.tfg_fx.controller.RegistroController"
+            prefHeight="600.0" prefWidth="500.0"
+            style="-fx-background-color: #f5f5f5;">
+
+    <VBox alignment="TOP_CENTER" spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+        <padding>
+            <Insets top="20" bottom="20" left="30" right="30"/>
+        </padding>
+
+        <!-- Título -->
+        <Text text="Planeta Maqueta"
+              style="-fx-fill: red; -fx-font-weight: bold;">
+            <font>
+                <Font size="24"/>
+            </font>
+        </Text>
+
+        <!-- Formulario de registro -->
+        <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25; -fx-border-color: #ddd; -fx-border-radius: 10;">
+
+            <!-- Nombre y Apellidos en misma fila -->
+            <HBox spacing="10">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Nombre *"/>
+                    <TextField fx:id="nombreField" promptText="Nombre"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Apellidos *"/>
+                    <TextField fx:id="apellidosField" promptText="Apellidos"/>
+                </VBox>
+            </HBox>
+
+            <!-- Nombre de Usuario -->
+            <VBox spacing="5">
+                <Label text="Nombre de Usuario *"/>
+                <TextField fx:id="nombreUsuarioField" promptText="Nombre de Usuario"/>
+            </VBox>
+
+            <!-- Email -->
+            <VBox spacing="5">
+                <Label text="E-mail *"/>
+                <TextField fx:id="emailField" promptText="E-mail"/>
+            </VBox>
+
+            <!-- Fecha de Nacimiento -->
+            <VBox spacing="5">
+                <Label text="Fecha de Nacimiento *"/>
+                <DatePicker fx:id="fechaNacimientoPicker"/>
+            </VBox>
+
+            <!-- Contraseñas -->
+            <HBox spacing="10">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Contraseña *"/>
+                    <PasswordField fx:id="passwordField" promptText="Contraseña"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Confirmar Contraseña *"/>
+                    <PasswordField fx:id="confirmPasswordField" promptText="Confirmar Contraseña"/>
+                </VBox>
+            </HBox>
+
+            <!-- Sexo -->
+            <VBox spacing="5">
+                <Label text="Sexo *"/>
+                <fx:define>
+                    <ToggleGroup fx:id="sexoToggleGroup"/>
+                </fx:define>
+                <HBox spacing="15">
+                    <RadioButton text="Masculino" toggleGroup="$sexoToggleGroup" userData="MASCULINO"/>
+                    <RadioButton text="Femenino" toggleGroup="$sexoToggleGroup" userData="FEMENINO"/>
+                    <RadioButton text="Otro" toggleGroup="$sexoToggleGroup" userData="OTRO"/>
+                </HBox>
+            </VBox>
+
+            <!-- Botón Registrarse -->
+            <Button text="Registrarse"
+                    onAction="#handleRegistro"
+                    style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                    maxWidth="Infinity"
+                    VBox.vgrow="ALWAYS">
+                <padding>
+                    <Insets top="10" bottom="10"/>
+                </padding>
+            </Button>
+
+            <!-- Enlace para volver al login -->
+            <HBox alignment="CENTER" spacing="5">
+                <Label text="¿Ya tienes cuenta?"/>
+                <Hyperlink text="Iniciar Sesión" onAction="#handleVolverLogin"/>
+            </HBox>
+        </VBox>
+    </VBox>
+
+</AnchorPane>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.tfg_fx.controller.AdminController"
+            prefWidth="900" prefHeight="700" style="-fx-background-color: #54D6F3;">
+
+    <!-- Botón Salir en esquina superior derecha -->
+    <Button text="Salir" onAction="#handleSalir"
+            style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;"
+            layoutX="800" layoutY="20" prefWidth="80" prefHeight="30"/>
+
+    <!-- Botón Cerrar Sesión -->
+    <Button text="Cerrar Sesión" onAction="#handleCerrarSesion"
+            style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold;"
+            layoutX="680" layoutY="20" prefWidth="110" prefHeight="30"/>
+
+    <VBox alignment="TOP_CENTER" spacing="20" layoutX="50" layoutY="80" prefWidth="800">
+        <Label text="Modo Administrador" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #B22234;"/>
+
+        <!-- GESTIÓN DE USUARIOS -->
+        <VBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: rgba(255,255,255,0.8); -fx-padding: 15; -fx-border-radius: 10;">
+            <Label text="Gestionar Usuarios" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #B22234;"/>
+
+            <!-- Buscar Usuario -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="buscarUsuarioField" promptText="Email del usuario" prefWidth="200"/>
+                <Button text="Buscar Usuario" onAction="#handleBuscarUsuario"/>
+                <Button text="Mostrar Todos" onAction="#handleMostrarTodosUsuarios"/>
+            </HBox>
+
+            <!-- Lista de Usuarios -->
+            <ListView fx:id="usuariosListView" prefHeight="100" prefWidth="500"/>
+
+            <!-- Borrar Usuario -->
+            <Button text="Borrar Cuenta" onAction="#toggleBorrar"/>
+            <Pane fx:id="panelBorrar" visible="false" managed="false" style="-fx-background-color: white; -fx-border-color: gray; -fx-padding: 10;" prefHeight="80" prefWidth="300">
+                <VBox spacing="10">
+                    <Label text="Borrar Usuario por ID:"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="idUsuarioBorrarField" promptText="ID Usuario" prefWidth="120"/>
+                        <Button text="Confirmar Borrado" onAction="#handleBorrarUsuario"/>
+                    </HBox>
+                </VBox>
+            </Pane>
+        </VBox>
+
+        <!-- GESTIÓN DE PRODUCTOS -->
+        <VBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: rgba(255,255,255,0.8); -fx-padding: 15; -fx-border-radius: 10;">
+            <Label text="Gestionar Productos" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #B22234;"/>
+
+            <!-- Buscar Productos -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="buscarProductoField" promptText="Nombre del producto" prefWidth="200"/>
+                <Button text="Buscar Producto" onAction="#handleBuscarProducto"/>
+                <Button text="Mostrar Todos" onAction="#handleMostrarTodosProductos"/>
+            </HBox>
+
+            <!-- Lista de Productos -->
+            <ListView fx:id="productosListView" prefHeight="100" prefWidth="500"/>
+
+            <!-- Añadir Producto -->
+            <Button text="Añadir Producto" onAction="#toggleAnadir"/>
+            <Pane fx:id="panelAnadir" visible="false" managed="false" style="-fx-background-color: white; -fx-border-color: gray; -fx-padding: 10;" prefHeight="200" prefWidth="400">
+                <VBox spacing="10">
+                    <Label text="Añadir Nuevo Producto:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="productoImagenUrlField" promptText="URL de la imagen"/>
+                    <TextField fx:id="productoNombreField" promptText="Nombre del producto"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="productoPrecioField" promptText="Precio" prefWidth="120"/>
+                        <TextField fx:id="productoStockField" promptText="Stock" prefWidth="120"/>
+                    </HBox>
+                    <TextArea fx:id="productoDescripcionField" promptText="Descripción" prefRowCount="3"/>
+                    <CheckBox fx:id="productoOfertaCheckBox" text="Producto en oferta"/>
+                    <Button text="Añadir Producto" onAction="#handleAnadirProducto"
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                </VBox>
+            </Pane>
+
+            <!-- Actualizar Stock -->
+            <Button text="Actualizar Stock" onAction="#toggleActualizar"/>
+            <Pane fx:id="panelActualizar" visible="false" managed="false" style="-fx-background-color: white; -fx-border-color: gray; -fx-padding: 10;" prefHeight="100" prefWidth="300">
+                <VBox spacing="10">
+                    <Label text="Actualizar Stock:"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="idProductoActualizarField" promptText="ID Producto" prefWidth="120"/>
+                        <TextField fx:id="nuevoStockField" promptText="Nuevo Stock" prefWidth="120"/>
+                    </HBox>
+                    <Button text="Actualizar Stock" onAction="#handleActualizarStock"/>
+                </VBox>
+            </Pane>
+
+            <!-- Borrar Producto -->
+            <Button text="Borrar Producto" onAction="#toggleBorrarProducto"/>
+            <Pane fx:id="panelBorrarProducto" visible="false" managed="false" style="-fx-background-color: white; -fx-border-color: gray; -fx-padding: 10;" prefHeight="80" prefWidth="300">
+                <VBox spacing="10">
+                    <Label text="Borrar Producto por ID:"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="idProductoBorrarField" promptText="ID Producto" prefWidth="120"/>
+                        <Button text="Confirmar Borrado" onAction="#handleBorrarProducto"/>
+                    </HBox>
+                </VBox>
+            </Pane>
+        </VBox>
+    </VBox>
+
+</AnchorPane>

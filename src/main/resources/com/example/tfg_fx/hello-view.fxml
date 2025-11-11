@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.tfg_fx.controller.HelloController"
+            xmlns="http://javafx.com/javafx/17.0.2-ea">
+
+    <!-- Fondo general -->
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <padding>
+                <Insets top="30" bottom="30" left="20" right="20"/>
+            </padding>
+
+            <!-- Logo -->
+            <ImageView fitHeight="120" fitWidth="120">
+                <image>
+                    <!-- Cambia la ruta por la de tu logo en resources
+                    <Image url="@images/logo.png"/> -->
+                </image>
+            </ImageView>
+
+            <!-- Título -->
+            <Label text="Planeta Maqueta" textFill="red">
+                <font>
+                    <Font name="Arial Bold" size="28"/>
+                </font>
+            </Label>
+
+            <!-- Caja para login -->
+            <VBox alignment="CENTER" spacing="15" style="-fx-background-color: #ff66b2; -fx-background-radius: 15; -fx-padding: 20;">
+                <TextField fx:id="emailField" promptText="E-mail" maxWidth="250"/>
+                <PasswordField fx:id="passwordField" promptText="Password" maxWidth="250"/>
+
+                <Button text="Entrar" fx:id="loginButton"
+                        onAction="#handleLogin"
+                        style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-background-radius: 10;"/>
+            </VBox>
+
+            <!-- Link de registro -->
+            <HBox alignment="CENTER" spacing="5">
+                <Label text="¿No tienes cuenta?"/>
+                <Hyperlink text="Regístrate" onAction="#handleRegistro"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

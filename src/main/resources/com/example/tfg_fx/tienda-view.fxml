@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.tfg_fx.controller.TiendaController"
+            prefHeight="700.0" prefWidth="1000.0">
+
+    <!-- Fondo -->
+    <ImageView fitHeight="700.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="false">
+        <Image url="@/images/40k_Ultramarines.jpg" />
+    </ImageView>
+
+    <!-- Cuadro azul claro con transparencia -->
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a8d0e6" opacity="0.7"
+               height="650.0" width="950.0"
+               layoutX="25.0" layoutY="25.0" />
+
+    <!-- Contenido principal -->
+    <VBox layoutX="50.0" layoutY="50.0" spacing="20" prefWidth="900.0" prefHeight="600.0">
+
+        <!-- Título principal -->
+        <Label text="Planeta Maqueta" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+            <padding>
+                <Insets bottom="10" />
+            </padding>
+        </Label>
+
+        <!-- Menú de navegación -->
+        <HBox spacing="30" alignment="CENTER_LEFT">
+            <Label text="Minis" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+            <Label text="Pinturas" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+            <Label text="Productos" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+            <Label text="De Usuarios" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+            <Label text="Otros" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+        </HBox>
+
+        <!-- Contenido de la tienda -->
+        <ScrollPane fitToWidth="true" prefHeight="500.0"
+                    style="-fx-background: transparent; -fx-border-color: transparent;">
+
+            <!-- Contenedor de secciones -->
+            <VBox spacing="25" fx:id="contenedorSecciones">
+
+                <!-- Sección base vacía -->
+                <VBox spacing="10" style="-fx-background-color: #f8c8dc; -fx-background-radius: 10; -fx-padding: 15;">
+                    <Label text=" " style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+
+                    <!-- Contenedor horizontal de productos -->
+                    <HBox spacing="20" alignment="CENTER" fx:id="contenedorProductos">
+                        <!-- Aquí se añadirán dinámicamente los productos desde Java -->
+                    </HBox>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </VBox>
+</AnchorPane>
