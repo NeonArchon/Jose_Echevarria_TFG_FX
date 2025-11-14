@@ -131,6 +131,13 @@
         </VBox>
     </StackPane>
 
+    <!-- Botón Tienda en la parte superior derecha -->
+    <Button text="Ir a Tienda"
+            onAction="#handleIrATienda"
+            layoutX="1100" layoutY="40"
+            style="-fx-background-color: #e0283c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 15; -fx-font-size: 14px;"
+            prefWidth="120" prefHeight="35"/>
+
     <!-- Botones Laterales -->
     <VBox layoutX="1000" layoutY="250" spacing="30" alignment="CENTER">
         <HBox alignment="CENTER" spacing="10">

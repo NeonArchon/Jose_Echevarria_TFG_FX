@@ -21,8 +21,8 @@
             <!-- Logo -->
             <ImageView fitHeight="120" fitWidth="120">
                 <image>
-                    <!-- Cambia la ruta por la de tu logo en resources
-                    <Image url="@images/logo.png"/> -->
+
+                    <Image url="@images/Logo_principal.png"/>
                 </image>
             </ImageView>
 

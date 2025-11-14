@@ -3,7 +3,11 @@ package com.example.tfg_fx.controller;
 import com.example.tfg_fx.model.DAO.DAO_Usuario;
 import com.example.tfg_fx.model.entities.Usuario;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
@@ -136,6 +140,44 @@ public class PerfilController {
     private void handleGuardarCambios() {
         if (validarDatos()) {
             guardarCambios();
+        }
+    }
+
+    /**
+     * NUEVO MÉTODO: Botón "Ir a Tienda"
+     */
+    @FXML
+    private void handleIrATienda() {
+        try {
+            System.out.println("Abriendo tienda...");
+
+            // Cargar la vista de la tienda
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tfg_fx/tienda-view.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador de la tienda y pasar el usuario actual
+            TiendaController tiendaController = loader.getController();
+            tiendaController.setUsuarioActual(usuarioActual);
+
+            // Crear nueva escena
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Planeta Maqueta - Tienda");
+            stage.setScene(scene);
+            stage.setMaximized(true); // Opcional: abrir maximizada
+
+            // Cerrar la ventana actual del perfil si se desea
+            // Stage currentStage = (Stage) nombreField.getScene().getWindow();
+            // currentStage.close();
+
+            stage.show();
+
+            System.out.println("✅ Tienda abierta correctamente");
+
+        } catch (Exception e) {
+            System.err.println("❌ Error al abrir la tienda: " + e.getMessage());
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo abrir la tienda: " + e.getMessage());
         }
     }
 
