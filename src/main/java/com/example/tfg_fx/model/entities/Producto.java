@@ -29,13 +29,11 @@ public class Producto {
     @Column(name = "imagen_url")
     private String imagenUrl;
 
-
     //constructor vacio
     public Producto() {
     }
 
     //constructor con campos
-
     public Producto(Long idproducto, String nombreproducto, int stock, String descripcion, boolean oferta, double precio, String imagenUrl) {
         this.idproducto = idproducto;
         this.nombreproducto = nombreproducto;
@@ -47,7 +45,6 @@ public class Producto {
     }
 
     //getters y setters
-
     public Long getIdproducto() {
         return idproducto;
     }
@@ -111,5 +108,19 @@ public class Producto {
                 ", precio=" + precio +
                 ", imagenUrl='" + imagenUrl + '\'' +
                 '}';
+    }
+
+    // MÉTODOS EQUALS Y HASHCODE IMPORTANTES PARA LAS COLECCIONES
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Producto producto = (Producto) o;
+        return idproducto != null && idproducto.equals(producto.idproducto);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
