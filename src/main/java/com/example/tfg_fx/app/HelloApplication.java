@@ -14,7 +14,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 HelloApplication.class.getResource("/com/example/tfg_fx/hello-view.fxml")
         );
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 1320, 1240);
         stage.setTitle("Planeta Maqueta");
         stage.setScene(scene);
         stage.show();
