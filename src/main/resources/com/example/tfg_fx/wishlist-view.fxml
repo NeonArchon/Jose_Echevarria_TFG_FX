@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.tfg_fx.controller.WishlistController"
+            prefWidth="1080" prefHeight="720"
+            style="-fx-background-color: #5BD2E1;">
+
+    <!-- ================= BARRA SUPERIOR ================= -->
+    <HBox spacing="20" layoutX="20" layoutY="20" alignment="CENTER_LEFT">
+
+        <ImageView fitHeight="40" fitWidth="40"
+                   image="@images/shopping-cart-icon.png"/>
+
+        <Label text="Planeta Maqueta"
+               style="-fx-font-size: 36px; -fx-font-family: 'Burbank Big Condensed'; -fx-text-fill: #AA0018;" />
+
+        <Pane HBox.hgrow="ALWAYS"/>
+
+        <HBox spacing="10" alignment="CENTER"
+              style="-fx-background-color: white; -fx-padding: 8; -fx-background-radius: 20;">
+            <TextField promptText="Buscar..."
+                       style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+            <ImageView fitHeight="20" fitWidth="20" image="@images/search-icon-png.png"/>
+        </HBox>
+
+        <ImageView image="@images/wishlist.png" fitHeight="45" fitWidth="45"/>
+    </HBox>
+
+
+    <!-- ================= CONTENEDOR PRINCIPAL ================= -->
+    <VBox layoutX="60" layoutY="120" prefWidth="960" prefHeight="550"
+          spacing="20"
+          style="-fx-background-color: #DA4AAE; -fx-background-radius: 40; -fx-padding: 25;">
+
+        <!-- Tabla wishlist -->
+        <TableView fx:id="tablaWishlist" prefHeight="450">
+
+            <columns>
+                <TableColumn text="Producto" prefWidth="250"/>
+                <TableColumn text="Descripción" prefWidth="500"/>
+                <TableColumn text="Precio" prefWidth="150"/>
+            </columns>
+
+        </TableView>
+
+    </VBox>
+
+</AnchorPane>
