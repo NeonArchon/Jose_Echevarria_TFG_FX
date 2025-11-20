@@ -2,13 +2,16 @@ package com.example.tfg_fx.controller;
 
 import com.example.tfg_fx.model.DAO.DAO_Usuario;
 import com.example.tfg_fx.model.entities.Usuario;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class PerfilController {
@@ -32,6 +35,10 @@ public class PerfilController {
     private Button guardarButton;
     @FXML
     private Button cancelarButton;
+    @FXML
+    private Button cambiarDatosButton;
+    @FXML
+    private Button irATiendaButton; // Asegúrate de que este botón existe en tu FXML
 
     private DAO_Usuario usuarioDAO;
     private Usuario usuarioActual;
@@ -53,6 +60,7 @@ public class PerfilController {
     public void initialize() {
         configurarComboBox();
         configurarEstilosCampos();
+        configurarBotones();
     }
 
     private void configurarComboBox() {
@@ -71,6 +79,15 @@ public class PerfilController {
         sexoComboBox.setStyle(estiloNoEditable);
     }
 
+    private void configurarBotones() {
+        // Configurar estilo del botón de tienda
+        if (irATiendaButton != null) {
+            irATiendaButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+            irATiendaButton.setOnMouseEntered(e -> irATiendaButton.setStyle("-fx-background-color: #45a049; -fx-text-fill: white; -fx-font-weight: bold;"));
+            irATiendaButton.setOnMouseExited(e -> irATiendaButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"));
+        }
+    }
+
     public void cargarDatosUsuario() {
         if (usuarioId != null) {
             usuarioActual = usuarioDAO.buscarPorId(usuarioId);
@@ -80,13 +97,26 @@ public class PerfilController {
                 // Guardar copia para cancelar
                 usuarioOriginal = clonarUsuario(usuarioActual);
                 System.out.println("✅ Datos del usuario cargados: " + usuarioActual.getNombre());
+
+                // Habilitar botón de tienda ahora que tenemos usuario
+                if (irATiendaButton != null) {
+                    irATiendaButton.setDisable(false);
+                }
             } else {
                 System.err.println("❌ No se pudo cargar el usuario con ID: " + usuarioId);
                 mostrarError("No se pudieron cargar los datos del usuario");
+                // Deshabilitar botón de tienda si no hay usuario
+                if (irATiendaButton != null) {
+                    irATiendaButton.setDisable(true);
+                }
             }
         } else {
             System.err.println("❌ No se ha establecido el ID del usuario");
             mostrarError("No hay usuario identificado");
+            // Deshabilitar botón de tienda si no hay usuario
+            if (irATiendaButton != null) {
+                irATiendaButton.setDisable(true);
+            }
         }
     }
 
@@ -144,41 +174,38 @@ public class PerfilController {
     }
 
     /**
-     * NUEVO MÉTODO: Botón "Ir a Tienda"
+     * MÉTODO COMPLETADO: Botón "Ir a Tienda"
      */
     @FXML
-    private void handleIrATienda() {
-        try {
-            System.out.println("Abriendo tienda...");
+    private void handleIrATienda(ActionEvent event) throws IOException {
 
-            // Cargar la vista de la tienda
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tfg_fx/tienda-view.fxml"));
-            Parent root = loader.load();
+        // 👉 OBTENER USUARIO DEL PERFIL, NO DE SINGLETON
+        Usuario usuario = usuarioActual;
 
-            // Obtener el controlador de la tienda y pasar el usuario actual
-            TiendaController tiendaController = loader.getController();
-            tiendaController.setUsuarioActual(usuarioActual);
-
-            // Crear nueva escena
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setTitle("Planeta Maqueta - Tienda");
-            stage.setScene(scene);
-            stage.setMaximized(true); // Opcional: abrir maximizada
-
-            // Cerrar la ventana actual del perfil si se desea
-            // Stage currentStage = (Stage) nombreField.getScene().getWindow();
-            // currentStage.close();
-
-            stage.show();
-
-            System.out.println("✅ Tienda abierta correctamente");
-
-        } catch (Exception e) {
-            System.err.println("❌ Error al abrir la tienda: " + e.getMessage());
-            e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo abrir la tienda: " + e.getMessage());
+        if (usuario == null) {
+            System.out.println("❌ No hay usuario cargado en PerfilController.");
+            return;
         }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tfg_fx/tienda-view.fxml"));
+        Parent tiendaRoot = loader.load();
+
+        // 👉 Pasar usuario al controlador de tienda
+        TiendaController tiendaController = loader.getController();
+        tiendaController.setUsuarioActual(usuario);
+
+        Scene tiendaScene = new Scene(tiendaRoot);
+
+        Stage currentStage = (Stage) irATiendaButton.getScene().getWindow();
+
+        Screen screen = Screen.getPrimary();
+        javafx.geometry.Rectangle2D bounds = screen.getVisualBounds();
+
+        currentStage.setScene(tiendaScene);
+        currentStage.setX(bounds.getMinX());
+        currentStage.setY(bounds.getMinY());
+        currentStage.setWidth(bounds.getWidth());
+        currentStage.setHeight(bounds.getHeight());
     }
 
     /**
@@ -197,6 +224,9 @@ public class PerfilController {
         modoEdicion = false;
         guardarButton.setVisible(false);
         cancelarButton.setVisible(false);
+
+        // Restaurar estilo de campos no editables
+        configurarEstilosCampos();
     }
 
     private void habilitarEdicion(boolean habilitar) {
@@ -231,6 +261,15 @@ public class PerfilController {
         // Validar que la fecha de nacimiento sea en el pasado
         if (fechaNacimientoPicker.getValue().isAfter(LocalDate.now())) {
             mostrarAlerta("Error de validación", "La fecha de nacimiento no puede ser futura");
+            return false;
+        }
+
+
+        // Validar que el email no esté en uso (excepto por el usuario actual)
+        String nuevoEmail = emailField.getText().trim();
+        Usuario emailExistente = usuarioDAO.buscarPorEmail(nuevoEmail);
+        if (emailExistente != null && !emailExistente.getId().equals(usuarioActual.getId())) {
+            mostrarAlerta("Error de validación", "El email ya está registrado");
             return false;
         }
 
