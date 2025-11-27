@@ -30,6 +30,36 @@ public class TiendaController {
     @FXML
     public void initialize() {
         cargarSeccionDesdeBD("Productos");
+
+    }
+
+    // =========================================================
+    // INICIALLIZAR LOS PRODUCTOS
+    // =========================================================
+
+    private void inicializarProductos() {
+
+        DAO_Porducto dao = new DAO_Porducto();
+
+        dao.anadirProducto(new Producto(null, "Trench Crusade: Pregrrinos de trinchera", 20, "Caja para iniciar tu coleccion de los peregrinos de trinchera de Trench Crusade", false, 45.0, "Trench_Pilgrims.jpg"));
+        dao.anadirProducto(new Producto(null, "Warhammer 4000: Lion El'Jhonson", 8, "El primarca de los Angeles Oscuros se une a una galaxia en perpetua guerra", false, 60.0, "Lion_Primarca_Angeles_Oscuros.jpg"));
+        dao.anadirProducto(new Producto(null, "Warhammer Age of Sigmar: Punta de Lanza Skaven", 10, "Caja con 25 miniaturas para empezar tu coleccion de Skaven", false, 115.0, "Skaven-Battleforce.jpg"));
+
+     /*   dao.anadirProducto(new Producto(null, "", 0, "", false, 0.0, ""));*/
+
+    }
+
+    // =========================================================
+    // CREACION DE TARJETAS
+    // =========================================================
+
+    private VBox crearTarjetaVacia() {
+        VBox empty = new VBox();
+        empty.setPrefSize(200, 240);
+        empty.setBackground(new Background(
+                new BackgroundFill(Color.TRANSPARENT, new CornerRadii(8), Insets.EMPTY)
+        ));
+        return empty;
     }
 
     // =========================================================
@@ -46,7 +76,8 @@ public class TiendaController {
             return;
         }
 
-        VBox seccion = new VBox(15);
+        // Contenedor general de la sección
+        VBox seccion = new VBox(20);
         seccion.setPadding(new Insets(15));
         seccion.setBackground(new Background(
                 new BackgroundFill(Color.web("#f8c8dc"), new CornerRadii(10), Insets.EMPTY)
@@ -54,18 +85,36 @@ public class TiendaController {
 
         Label labelTitulo = new Label(titulo.toUpperCase());
         labelTitulo.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
+        seccion.getChildren().add(labelTitulo);
 
-        HBox fila = new HBox(20);
-        fila.setAlignment(Pos.CENTER);
+        // -------- Crear filas de 3 productos --------
+        HBox fila = null;
+        int contador = 0;
 
-        productos.stream()
-                .limit(6)
-                .forEach(p -> fila.getChildren().add(crearTarjetaProducto(p)));
+        for (Producto p : productos) {
 
-        seccion.getChildren().addAll(labelTitulo, fila);
+            if (contador % 3 == 0) {
+                fila = new HBox(20);
+                fila.setAlignment(Pos.CENTER_LEFT);
+                seccion.getChildren().add(fila);
+            }
+
+            fila.getChildren().add(crearTarjetaProducto(p));
+            contador++;
+        }
+
+        // -------- Agregar hueco vacío si falta para completar 3 productos --------
+        int resto = contador % 3;
+        if (resto != 0) {
+            int espaciosVacios = 3 - resto;
+            for (int i = 0; i < espaciosVacios; i++) {
+                fila.getChildren().add(crearTarjetaVacia());
+            }
+        }
 
         contenedorSecciones.getChildren().add(seccion);
     }
+
 
     // =========================================================
     // TARJETA VISUAL DE PRODUCTO
