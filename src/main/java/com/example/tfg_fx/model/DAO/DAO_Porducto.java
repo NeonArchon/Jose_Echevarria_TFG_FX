@@ -142,4 +142,83 @@ public class DAO_Porducto implements DAO_Producto_Itf{
         }
     }
 
+    @Override
+    public List<Producto> buscarPorTipo(String tipo) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                            "FROM Producto WHERE tipo = :tipo", Producto.class)
+                    .setParameter("tipo", tipo)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<Producto> obtenerWishlist() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                            "FROM Producto WHERE enwishlist = true", Producto.class)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<Producto> obtenerCarrito() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                            "FROM Producto WHERE encarrito = true", Producto.class)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void actualizarEnWishlist(Long idProducto, boolean enWishlist) {
+        Transaction transaction = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            Producto producto = session.get(Producto.class, idProducto);
+
+            if (producto != null) {
+                producto.setEnwishlist(enWishlist);
+                session.merge(producto);
+                System.out.println("Wishlist actualizado para producto ID " + idProducto);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void actualizarEnCarrito(Long idProducto, boolean enCarrito) {
+        Transaction transaction = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            Producto producto = session.get(Producto.class, idProducto);
+
+            if (producto != null) {
+                producto.setEncarrito(enCarrito);
+                session.merge(producto);
+                System.out.println("Carrito actualizado para producto ID " + idProducto);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+    }
+
 }

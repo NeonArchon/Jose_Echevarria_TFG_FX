@@ -109,4 +109,16 @@ public class DAO_Usuario implements DAO_Usuario_Itf{
         }
     }
 
+    @Override
+    public Usuario obtenerUsuarioLogueado() {
+        try (Session s = HibernateUtil.getSessionFactory().openSession()) {
+            return s.createQuery("FROM Usuario WHERE logueado = true", Usuario.class)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

@@ -29,12 +29,22 @@ public class Producto {
     @Column(name = "imagen_url")
     private String imagenUrl;
 
+    @Column(name = "tipo", nullable = false)
+    private String tipo;
+
+    @Column(name = "enwishlist")
+    private boolean enwishlist;
+
+    @Column(name = "encarrito")
+    private boolean encarrito;
+
     //constructor vacio
     public Producto() {
     }
 
     //constructor con campos
-    public Producto(Long idproducto, String nombreproducto, int stock, String descripcion, boolean oferta, double precio, String imagenUrl) {
+    public Producto(Long idproducto, String nombreproducto, int stock, String descripcion, boolean oferta,
+                    double precio, String imagenUrl, String tipo, boolean enwishlist, boolean encarrito) {
         this.idproducto = idproducto;
         this.nombreproducto = nombreproducto;
         this.stock = stock;
@@ -42,6 +52,9 @@ public class Producto {
         this.oferta = oferta;
         this.precio = precio;
         this.imagenUrl = imagenUrl;
+        this.tipo = tipo;
+        this.enwishlist = enwishlist;
+        this.encarrito = encarrito;
     }
 
     //getters y setters
@@ -96,6 +109,18 @@ public class Producto {
     public String getImagenUrl() {return imagenUrl;}
 
     public void setImagenUrl(String imagenUrl) {this.imagenUrl = imagenUrl;}
+
+    public String getTipo() {return tipo;}
+
+    public void setTipo(String tipo) {this.tipo = tipo;}
+
+    public boolean isEnwishlist() {return enwishlist;}
+
+    public void setEnwishlist(boolean enwishlist) {this.enwishlist = enwishlist;}
+
+    public boolean isEncarrito() {return encarrito;}
+
+    public void setEncarrito(boolean encarrito) {this.encarrito = encarrito;}
 
     @Override
     public String toString() {

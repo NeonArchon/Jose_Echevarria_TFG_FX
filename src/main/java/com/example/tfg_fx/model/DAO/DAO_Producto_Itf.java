@@ -24,4 +24,14 @@ public interface DAO_Producto_Itf {
 
     List<Producto> buscarPorRangoPrecios(double precioMin, double precioMax);
 
+    List<Producto> buscarPorTipo(String tipo);
+
+    List<Producto> obtenerWishlist();
+
+    List<Producto> obtenerCarrito();
+
+    void actualizarEnWishlist(Long idProducto, boolean enWishlist);
+
+    void actualizarEnCarrito(Long idProducto, boolean enCarrito);
+
 }

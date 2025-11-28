@@ -12,4 +12,5 @@ public interface DAO_Usuario_Itf {
     List<Usuario> obtenerTodosLosUsuarios();
     void eliminarUsuario(Long idUsuario);
     Usuario buscarPorId(Long idUsuario);
+    public Usuario obtenerUsuarioLogueado();
 }

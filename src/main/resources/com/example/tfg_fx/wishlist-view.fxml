@@ -34,7 +34,6 @@
         <ImageView image="@images/wishlist.png" fitHeight="45" fitWidth="45"/>
     </HBox>
 
-
     <!-- ================= CONTENEDOR PRINCIPAL ================= -->
     <VBox layoutX="60" layoutY="120" prefWidth="960" prefHeight="550"
           spacing="20"
