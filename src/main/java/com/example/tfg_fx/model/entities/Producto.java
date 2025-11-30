@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "producto")
 public class Producto {
-
-    //atributios
+    // Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idproducto;
@@ -38,11 +37,11 @@ public class Producto {
     @Column(name = "encarrito")
     private boolean encarrito;
 
-    //constructor vacio
+    // Constructor vacío (OBLIGATORIO)
     public Producto() {
     }
 
-    //constructor con campos
+    // Constructor COMPLETO
     public Producto(Long idproducto, String nombreproducto, int stock, String descripcion, boolean oferta,
                     double precio, String imagenUrl, String tipo, boolean enwishlist, boolean encarrito) {
         this.idproducto = idproducto;
@@ -57,7 +56,16 @@ public class Producto {
         this.encarrito = encarrito;
     }
 
-    //getters y setters
+    // Constructor REDUCIDO (para inicializar productos fácilmente)
+    public Producto(Long idproducto, String nombreproducto, int stock, String descripcion,
+                    boolean oferta, double precio, String imagenUrl) {
+
+        this(idproducto, nombreproducto, stock, descripcion, oferta,
+                precio, imagenUrl, "general", false, false);
+    }
+
+    // ----------- Getters y Setters -----------
+
     public Long getIdproducto() {
         return idproducto;
     }
@@ -106,21 +114,39 @@ public class Producto {
         this.precio = precio;
     }
 
-    public String getImagenUrl() {return imagenUrl;}
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
 
-    public void setImagenUrl(String imagenUrl) {this.imagenUrl = imagenUrl;}
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
+    }
 
-    public String getTipo() {return tipo;}
+    public String getTipo() {
+        return tipo;
+    }
 
-    public void setTipo(String tipo) {this.tipo = tipo;}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-    public boolean isEnwishlist() {return enwishlist;}
+    public boolean isEnwishlist() {
+        return enwishlist;
+    }
 
-    public void setEnwishlist(boolean enwishlist) {this.enwishlist = enwishlist;}
+    public void setEnwishlist(boolean enwishlist) {
+        this.enwishlist = enwishlist;
+    }
 
-    public boolean isEncarrito() {return encarrito;}
+    public boolean isEncarrito() {
+        return encarrito;
+    }
 
-    public void setEncarrito(boolean encarrito) {this.encarrito = encarrito;}
+    public void setEncarrito(boolean encarrito) {
+        this.encarrito = encarrito;
+    }
+
+    // ----------- toString -----------
 
     @Override
     public String toString() {
@@ -135,7 +161,8 @@ public class Producto {
                 '}';
     }
 
-    // MÉTODOS EQUALS Y HASHCODE IMPORTANTES PARA LAS COLECCIONES
+    // ----------- Equals y HashCode -----------
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

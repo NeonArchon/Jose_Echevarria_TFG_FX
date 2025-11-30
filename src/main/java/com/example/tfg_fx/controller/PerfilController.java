@@ -192,7 +192,10 @@ public class PerfilController {
 
         // 👉 Pasar usuario al controlador de tienda
         TiendaController tiendaController = loader.getController();
-        tiendaController.setUsuarioActual(usuario);
+        DAO_Usuario dao = new DAO_Usuario();
+        Usuario usuarioFull = dao.obtenerUsuarioConListas(getUsuarioActual().getId());
+
+        tiendaController.setUsuarioActual(usuarioFull);
 
         Scene tiendaScene = new Scene(tiendaRoot);
 

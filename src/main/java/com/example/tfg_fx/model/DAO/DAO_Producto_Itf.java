@@ -34,4 +34,6 @@ public interface DAO_Producto_Itf {
 
     void actualizarEnCarrito(Long idProducto, boolean enCarrito);
 
+
+
 }

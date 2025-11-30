@@ -2,6 +2,7 @@ package com.example.tfg_fx.model.DAO;
 
 import com.example.tfg_fx.model.entities.Usuario;
 import com.example.tfg_fx.util.HibernateUtil;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -30,15 +31,13 @@ public class DAO_Usuario implements DAO_Usuario_Itf{
 
     @Override
     public void actualizar(Usuario usuario) {
-        Transaction transaction = null;
+        Transaction tx = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.merge(usuario); // reemplaza update() para evitar DetachedObjectException
-            transaction.commit();
-            System.out.println("✅ Usuario actualizado correctamente: " + usuario.getEmail());
+            tx = session.beginTransaction();
+            session.merge(usuario);
+            tx.commit();
         } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            System.err.println("❌ Error al actualizar usuario: " + e.getMessage());
+            if (tx != null) tx.rollback();
             e.printStackTrace();
         }
     }
@@ -95,17 +94,9 @@ public class DAO_Usuario implements DAO_Usuario_Itf{
     }
 
     @Override
-    public Usuario buscarPorId(Long idUsuario) {
+    public Usuario buscarPorId(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Usuario usuario = session.get(Usuario.class, idUsuario);
-            if (usuario == null) {
-                System.out.println("⚠️ No se encontró usuario con ID: " + idUsuario);
-            }
-            return usuario;
-        } catch (Exception e) {
-            System.err.println("❌ Error al buscar usuario por ID: " + e.getMessage());
-            e.printStackTrace();
-            return null;
+            return session.get(Usuario.class, id);
         }
     }
 
@@ -121,4 +112,38 @@ public class DAO_Usuario implements DAO_Usuario_Itf{
         }
     }
 
+
+
+    public Usuario login(String email, String pass) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List<Usuario> lista = session
+                    .createQuery("FROM Usuario u WHERE u.email = :e AND u.contrasena = :p", Usuario.class)
+                    .setParameter("e", email)
+                    .setParameter("p", pass)
+                    .getResultList();
+
+            return lista.isEmpty() ? null : lista.get(0);
+        }
+    }
+
+    public Usuario obtenerUsuarioConListas(Long idUsuario) {
+        Transaction tx = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+
+            Usuario u = session.get(Usuario.class, idUsuario);
+
+            // Forzar carga de listas LAZY
+            Hibernate.initialize(u.getWishlist());
+            Hibernate.initialize(u.getCarrito());
+
+            tx.commit();
+            return u;
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 }

@@ -13,10 +13,13 @@ public class DetallesProductoController {
 
     @FXML
     private Label lblNombre;
+
     @FXML
     private Label lblDescripcion;
+
     @FXML
     private Label lblPrecio;
+
     @FXML
     private ImageView imgProducto;
 
@@ -35,11 +38,16 @@ public class DetallesProductoController {
         lblPrecio.setText(String.format("%.2f €", producto.getPrecio()));
 
         try {
-            InputStream is = getClass().getResourceAsStream("/images/" + producto.getImagenUrl());
-            if (is != null) imgProducto.setImage(new Image(is));
+            String path = "/images/" + producto.getImagenUrl();
+            InputStream is = getClass().getResourceAsStream(path);
+
+            if (is != null) {
+                imgProducto.setImage(new Image(is));
+            } else {
+                imgProducto.setImage(new Image(getClass().getResourceAsStream("/images/default.png")));
+            }
         } catch (Exception e) {
-            // ignore
+            imgProducto.setImage(new Image(getClass().getResourceAsStream("/images/default.png")));
         }
     }
-
 }
