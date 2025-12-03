@@ -1,6 +1,7 @@
 package com.example.tfg_fx.model.DAO;
 
 import com.example.tfg_fx.model.entities.Producto;
+import com.example.tfg_fx.model.entities.Usuario;
 
 import java.util.List;
 
@@ -33,7 +34,6 @@ public interface DAO_Producto_Itf {
     void actualizarEnWishlist(Long idProducto, boolean enWishlist);
 
     void actualizarEnCarrito(Long idProducto, boolean enCarrito);
-
 
 
 }

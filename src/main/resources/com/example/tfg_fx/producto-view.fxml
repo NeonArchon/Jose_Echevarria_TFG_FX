@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.tfg_fx.controller.PantallaProductoController"
+            prefWidth="900" prefHeight="600">
+
+    <!-- CONTENIDO CENTRAL -->
+    <center>
+        <HBox spacing="40" alignment="CENTER" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="40" bottom="40" left="40" right="40"/>
+            </padding>
+
+            <!-- COLUMNA IZQUIERDA: IMAGEN + DESCRIPCIÓN -->
+            <VBox spacing="20" alignment="TOP_CENTER" prefWidth="450">
+
+                <!-- TÍTULO -->
+                <Label fx:id="lblTitulo"
+                       text="Título del Producto"
+                       style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #731b5c;"/>
+
+                <!-- IMAGEN -->
+                <ImageView fx:id="imgProducto"
+                           fitWidth="350"
+                           preserveRatio="true"/>
+
+                <!-- DESCRIPCIÓN -->
+                <Label fx:id="lblDescripcion"
+                       text="Descripción del producto..."
+                       wrapText="true"
+                       style="-fx-font-size: 14px; -fx-text-fill: white;"/>
+
+            </VBox>
+
+            <!-- SEPARADOR VERTICAL -->
+            <Separator orientation="VERTICAL"/>
+
+            <!-- COLUMNA DERECHA: ESPECIFICACIONES -->
+            <VBox spacing="20" alignment="TOP_LEFT" prefWidth="350">
+
+                <Label text="Especificaciones del Producto"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+                <VBox spacing="10">
+
+                    <Label fx:id="lblPrecio" text="Precio:" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
+                    <Label fx:id="lblObjetos" text="Número de objetos:" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
+                    <Label fx:id="lblDimensiones" text="Dimensiones:" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
+                    <Label fx:id="lblPeso" text="Peso:" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
+
+                </VBox>
+
+                <!-- BOTONES -->
+                <HBox spacing="15" alignment="CENTER_LEFT">
+
+                    <Button fx:id="btnComprar"
+                            text="Comprar"
+                            style="-fx-background-color: black; -fx-text-fill: white; -fx-padding: 10 20;"/>
+
+                    <Button fx:id="btnCarrito"
+                            text="Añadir al carrito"
+                            style="-fx-background-color: #ffdf00; -fx-padding: 10 20;"/>
+
+                    <Button fx:id="btnWishlist"
+                            text="Wishlist"
+                            style="-fx-background-color: white; -fx-padding: 10 20;"/>
+
+                </HBox>
+
+            </VBox>
+
+        </HBox>
+    </center>
+
+    <!-- COLOR DE FONDO -->
+    <stylesheets>
+        <URL value="@product-style.css"/>
+    </stylesheets>
+
+</BorderPane>

@@ -146,4 +146,24 @@ public class DAO_Usuario implements DAO_Usuario_Itf{
         }
 
     }
+
+    public Usuario obtenerUsuarioPorEmail(String email) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Usuario usuario = null;
+
+        try {
+            usuario = session.createQuery(
+                            "SELECT u FROM Usuario u LEFT JOIN FETCH u.wishlist WHERE u.email = :email",
+                            Usuario.class
+                    )
+                    .setParameter("email", email)
+                    .uniqueResult();
+
+        } finally {
+            session.close();
+        }
+
+        return usuario;
+    }
+
 }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            style="-fx-background-color: #f5f5f5;" fx:controller="com.example.tfg_fx.controller.PagoController">
+
+    <!-- Contenedor principal centrado -->
+    <VBox alignment="CENTER" spacing="30" BorderPane.alignment="CENTER">
+        <padding>
+            <Insets top="40" right="40" bottom="40" left="40"/>
+        </padding>
+
+        <!-- Título -->
+        <Label text="Seleccione Método de Pago"
+               style="-fx-text-fill: #2c3e50;">
+            <font>
+                <Font name="System Bold" size="24"/>
+            </font>
+        </Label>
+
+        <!-- Contenedor de opciones de pago -->
+        <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 25;">
+            <VBox spacing="15">
+                <!-- Opción Bizum -->
+                <HBox spacing="15" alignment="CENTER_LEFT">
+                    <RadioButton fx:id="bizumRadio" text="Bizum" selected="true">
+                        <font>
+                            <Font name="System Bold" size="16"/>
+                        </font>
+                        <toggleGroup>
+                            <ToggleGroup fx:id="paymentGroup"/>
+                        </toggleGroup>
+                    </RadioButton>
+                    <Label text="Pago rápido con móvil"
+                           style="-fx-text-fill: #7f8c8d;"
+                           font=" ">
+                        <font>
+                            <Font name="System" size="14"/>
+                        </font>
+                    </Label>
+                </HBox>
+
+                <!-- Separador -->
+                <HBox style="-fx-background-color: #ecf0f1; -fx-min-height: 1; -fx-pref-width: 100%;"/>
+
+                <!-- Opción Tarjeta Bancaria -->
+                <HBox spacing="15" alignment="CENTER_LEFT">
+                    <RadioButton fx:id="cardRadio" text="Tarjeta Bancaria" toggleGroup="$paymentGroup">
+                        <font>
+                            <Font name="System Bold" size="16"/>
+                        </font>
+                    </RadioButton>
+                    <Label text="Visa, Mastercard, etc."
+                           style="-fx-text-fill: #7f8c8d;">
+                        <font>
+                            <Font name="System" size="14"/>
+                        </font>
+                    </Label>
+                </HBox>
+
+                <!-- Separador -->
+                <HBox style="-fx-background-color: #ecf0f1; -fx-min-height: 1; -fx-pref-width: 100%;"/>
+
+                <!-- Opción Transferencia Bancaria -->
+                <HBox spacing="15" alignment="CENTER_LEFT">
+                    <RadioButton fx:id="transferRadio" text="Transferencia Bancaria" toggleGroup="$paymentGroup">
+                        <font>
+                            <Font name="System Bold" size="16"/>
+                        </font>
+                    </RadioButton>
+                    <Label text="Transferencia desde tu banco"
+                           style="-fx-text-fill: #7f8c8d;">
+                        <font>
+                            <Font name="System" size="14"/>
+                        </font>
+                    </Label>
+                </HBox>
+            </VBox>
+
+            <!-- Botón de confirmación -->
+            <Button text="Continuar"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5;"
+                    onAction="#handleContinue">
+                <font>
+                    <Font name="System Bold" size="16"/>
+                </font>
+                <padding>
+                    <Insets top="10" right="30" bottom="10" left="30"/>
+                </padding>
+            </Button>
+        </VBox>
+
+        <!-- Información adicional -->
+        <Label text="Su información de pago está protegida y encriptada"
+               style="-fx-text-fill: #95a5a6;">
+            <font>
+                <Font name="System Italic" size="12"/>
+            </font>
+        </Label>
+    </VBox>
+</BorderPane>

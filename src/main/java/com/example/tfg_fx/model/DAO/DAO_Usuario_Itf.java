@@ -13,4 +13,6 @@ public interface DAO_Usuario_Itf {
     void eliminarUsuario(Long idUsuario);
     Usuario buscarPorId(Long idUsuario);
     public Usuario obtenerUsuarioLogueado();
+    public Usuario obtenerUsuarioPorEmail(String email);
+
 }
