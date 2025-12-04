@@ -36,7 +36,7 @@ public class Usuario {
     private String sexo;
 
     // NUEVOS ATRIBUTOS PARA WISHLIST Y CARRITO
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_wishlist",
             joinColumns = @JoinColumn(name = "usuario_id"),
@@ -44,7 +44,7 @@ public class Usuario {
     )
     private List<Producto> wishlist = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_carrito",
             joinColumns = @JoinColumn(name = "usuario_id"),
@@ -119,6 +119,7 @@ public class Usuario {
     }
 
     public boolean tieneEnCarrito(Producto producto) {
+
         return this.carrito.contains(producto);
     }
 }

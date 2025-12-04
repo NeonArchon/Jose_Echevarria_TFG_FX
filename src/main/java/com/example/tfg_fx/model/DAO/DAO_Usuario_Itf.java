@@ -14,5 +14,4 @@ public interface DAO_Usuario_Itf {
     Usuario buscarPorId(Long idUsuario);
     public Usuario obtenerUsuarioLogueado();
     public Usuario obtenerUsuarioPorEmail(String email);
-
 }
