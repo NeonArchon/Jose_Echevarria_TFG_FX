@@ -211,13 +211,13 @@ public class TiendaController {
     private void abrirDetallesProducto(Producto producto) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/example/tfg_fx/detalles-producto.fxml"));
+                    getClass().getResource("/com/example/tfg_fx/producto-view.fxml")); // Asegúrate que este es el nombre correcto del archivo FXML
 
             Parent root = loader.load();
 
             Object controller = loader.getController();
-            if (controller instanceof DetallesProductoController) {
-                ((DetallesProductoController) controller).setProducto(producto);
+            if (controller instanceof PantallaProductoController) {
+                ((PantallaProductoController) controller).cargarProducto(producto); // Llamar al método cargarProducto
             }
 
             Stage stage = new Stage();

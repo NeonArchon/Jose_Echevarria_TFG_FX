@@ -20,6 +20,7 @@
         <mapping class="com.example.tfg_fx.model.entities.Administrador"/>
         <mapping class="com.example.tfg_fx.model.entities.Producto"/>
         <mapping class="com.example.tfg_fx.model.entities.Comprar"/>
+        <mapping class="com.example.tfg_fx.model.entities.CompraTotal"/>
         <mapping class="com.example.tfg_fx.model.entities.Vender"/>
     </session-factory>
 </hibernate-configuration>
