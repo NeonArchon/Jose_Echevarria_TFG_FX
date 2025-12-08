@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.*?>
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.tfg_fx.controller.CarritoCOntroller"
+            fx:controller="com.example.tfg_fx.controller.CarritoController"
             prefWidth="1080" prefHeight="720"
             style="-fx-background-color: #5BD2E1;">
 
@@ -18,23 +15,21 @@
 
         <!-- Icono menú -->
         <ImageView fitHeight="40" fitWidth="40"
-                   pickOnBounds="true" preserveRatio="true"
-                   fx:id="menuIcon"
+                   preserveRatio="true" fx:id="menuIcon"
                    image="@images/sell.png"/>
 
         <!-- Texto logo -->
         <Label text="Planeta Maqueta"
-               style="-fx-font-size: 36px; -fx-font-family: 'Burbank Big Condensed'; -fx-text-fill: #AA0018;" />
+               style="-fx-font-size: 40px; -fx-font-family: 'Burbank Big Condensed'; -fx-text-fill: #AA0018;" />
 
-        <!-- Espaciador -->
         <Pane HBox.hgrow="ALWAYS"/>
 
-        <!-- Barra de búsqueda -->
+        <!-- Barra búsqueda -->
         <HBox spacing="10" alignment="CENTER"
-              style="-fx-background-color: white; -fx-padding: 8; -fx-background-radius: 20;">
+              style="-fx-background-color: white; -fx-padding: 8 20; -fx-background-radius: 20;">
             <TextField fx:id="buscarField" promptText="Buscar..."
                        style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-            <ImageView fitHeight="20" fitWidth="20" image="@images/search-icon-png.png"/>
+            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true" image="@images/search-icon-png.png"/>
         </HBox>
 
         <!-- Icono carrito -->
@@ -42,30 +37,58 @@
     </HBox>
 
 
-    <!-- ================= CONTENEDOR PRINCIPAL ================= -->
-    <VBox layoutX="60" layoutY="120" prefWidth="960" prefHeight="550"
+    <!-- ================= CONTENEDOR PANEL ROSADO ================= -->
+    <VBox layoutX="50" layoutY="110"
+          prefWidth="980" prefHeight="580"
           spacing="20"
-          style="-fx-background-color: #DA4AAE; -fx-background-radius: 40; -fx-padding: 25;">
+          style="-fx-background-color: #DA4AAE;
+                 -fx-background-radius: 40;
+                 -fx-border-color: white;
+                 -fx-border-width: 5;
+                 -fx-border-radius: 40;
+                 -fx-padding: 20;">
 
-        <!-- Tabla de productos del carrito -->
-        <TableView fx:id="tablaCarrito" prefHeight="450" style="-fx-background-radius: 20;">
+        <!-- CONTENEDOR INTERNO CON BORDE BLANCO (como en la imagen) -->
+        <StackPane prefHeight="460" style="
+                -fx-background-color: transparent;
+                -fx-padding: 10;">
+            <VBox style="-fx-background-color: transparent;
+                         -fx-border-color: white;
+                         -fx-border-width: 6;
+                         -fx-border-radius: 30;
+                         -fx-padding: 15;">
 
-            <columns>
-                <TableColumn text="Producto" prefWidth="200"/>
-                <TableColumn text="Descripción" prefWidth="350"/>
-                <TableColumn text="Cantidad" prefWidth="150"/>
-                <TableColumn text="Precio" prefWidth="150"/>
-            </columns>
+                <!-- TABLA -->
+                <TableView fx:id="tablaCarrito"
+                           prefHeight="440"
+                           style="-fx-background-color: transparent;
+                                  -fx-table-cell-border-color: white;
+                                  -fx-border-insets: 0;
+                                  -fx-padding: 5;">
 
-        </TableView>
+                    <columns>
+                        <TableColumn text="Producto" prefWidth="200"
+                                     style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                        <TableColumn text="Descripcion" prefWidth="350"
+                                     style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                        <TableColumn text="Cantidad" prefWidth="150"
+                                     style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                        <TableColumn text="Precio" prefWidth="150"
+                                     style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                    </columns>
+
+                </TableView>
+            </VBox>
+        </StackPane>
 
         <!-- TOTAL -->
-        <HBox alignment="CENTER_RIGHT" spacing="10">
+        <HBox alignment="CENTER_RIGHT" spacing="10"
+              style="-fx-padding: 0 20 10 20;">
             <Label text="TOTAL:"
-                   style="-fx-font-size: 26px; -fx-text-fill: white; -fx-font-weight: bold;" />
+                   style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" />
             <Label fx:id="labelTotal"
                    text="0.00 €"
-                   style="-fx-font-size: 26px; -fx-text-fill: white; -fx-font-weight: bold;" />
+                   style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" />
         </HBox>
 
     </VBox>

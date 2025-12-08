@@ -3,6 +3,7 @@ package com.example.tfg_fx.model.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,122 +16,146 @@ public class Comprar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "id_cliente", nullable = false)
-    private Long idCliente;
+    // --- Relaciones ---
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idusuario", nullable = false)
+    private Usuario usuario;
 
-    @Column(name = "id_producto", nullable = false)
-    private Long idProducto;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idproducto", nullable = false)
+    private Producto producto;
 
-    @Column(nullable = false)
-    private int cantidad;
+    @ManyToOne
+    @JoinColumn(name = "id_compra_total")
+    private CompraTotal compraTotal;
 
-    @Column(name = "precio_unitario", nullable = false)
-    private double precioUnitario;
-
-    @Column(name = "subtotal", nullable = false)
-    private double subtotal;
-
-    @Column(name = "fecha_compra", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCompra;
-
-    @Column(name = "metodo_pago", nullable = false, length = 20)
-    private String metodoPago; // "TARJETA", "BIZUM", "TRANSFERENCIA"
-
-    @Column(name = "estado", nullable = false, length = 20)
-    private String estado; // "PENDIENTE", "COMPLETADO", "CANCELADO", "ENVIADO", "ENTREGADO"
-
-    @Column(name = "direccion_envio")
-    private String direccionEnvio;
-
-    @Column(name = "telefono_contacto")
-    private String telefonoContacto;
-
-    @Column(name = "numero_referencia")
-    private String numeroReferencia; // Para transferencias o referencias de pago
-
-    // Constructor vacío
-    public Comprar() {
-        this.fechaCompra = new Date();
-        this.estado = "PENDIENTE";
+    public CompraTotal getCompraTotal() {
+        return compraTotal;
     }
 
-    // Constructor con parámetros básicos
-    public Comprar(Long idCliente, Long idProducto, int cantidad,
-                   double precioUnitario, String metodoPago) {
-        this();
-        this.idCliente = idCliente;
-        this.idProducto = idProducto;
+    public void setCompraTotal(CompraTotal compraTotal) {
+        this.compraTotal = compraTotal;
+    }
+
+    // --- Datos de compra ---
+    private int cantidad;
+    private double precioUnitario;
+    private double subtotal;
+
+    private String metodoPago;
+    private String estado;
+
+    private String direccionEnvio;
+    private String telefonoContacto;
+
+    private LocalDateTime fechaCompra = LocalDateTime.now();
+
+    // ============================================================
+    // ✔ CONSTRUCTOR QUE NECESITA PagoController
+    // ============================================================
+    public Comprar(Long idUsuario,
+                   Long idProducto,
+                   int cantidad,
+                   double precioUnitario,
+                   String metodoPago) {
+
+        this.usuario = new Usuario();
+        this.usuario.setId(idUsuario);
+
+        this.producto = new Producto();
+        this.producto.setIdproducto(idProducto);
+
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
-        this.subtotal = precioUnitario * cantidad;
+        this.subtotal = cantidad * precioUnitario;
+
         this.metodoPago = metodoPago;
     }
 
-    // Getters y setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // Constructor vacío obligatorio
+    public Comprar() {
+    }
 
-    public Long getIdCliente() { return idCliente; }
-    public void setIdCliente(Long idCliente) { this.idCliente = idCliente; }
+    // =========================
+    // Getters y Setters
+    // =========================
+    public Long getId() {
+        return id;
+    }
 
-    public Long getIdProducto() { return idProducto; }
-    public void setIdProducto(Long idProducto) { this.idProducto = idProducto; }
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-    public int getCantidad() { return cantidad; }
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-        this.subtotal = this.precioUnitario * cantidad;
     }
 
-    public double getPrecioUnitario() { return precioUnitario; }
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
     public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
-        this.subtotal = precioUnitario * this.cantidad;
     }
 
-    public double getSubtotal() { return subtotal; }
-    public void setSubtotal(double subtotal) { this.subtotal = subtotal; }
+    public double getSubtotal() {
+        return subtotal;
+    }
 
-    public Date getFechaCompra() { return fechaCompra; }
-    public void setFechaCompra(Date fechaCompra) { this.fechaCompra = fechaCompra; }
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
 
-    public String getMetodoPago() { return metodoPago; }
-    public void setMetodoPago(String metodoPago) { this.metodoPago = metodoPago; }
+    public String getMetodoPago() {
+        return metodoPago;
+    }
 
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
 
-    public String getDireccionEnvio() { return direccionEnvio; }
-    public void setDireccionEnvio(String direccionEnvio) { this.direccionEnvio = direccionEnvio; }
+    public String getEstado() {
+        return estado;
+    }
 
-    public String getTelefonoContacto() { return telefonoContacto; }
-    public void setTelefonoContacto(String telefonoContacto) { this.telefonoContacto = telefonoContacto; }
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
-    public String getNumeroReferencia() { return numeroReferencia; }
-    public void setNumeroReferencia(String numeroReferencia) { this.numeroReferencia = numeroReferencia; }
+    public String getDireccionEnvio() {
+        return direccionEnvio;
+    }
 
-    // MÉTODO PARA PROCESAR COMPRA DESDE EL CARRITO
-    public static List<Comprar> procesarCarrito(Usuario usuario, String metodoPago,
-                                                String direccionEnvio, String telefonoContacto) {
-        List<Comprar> compras = new ArrayList<>();
-        Date fechaActual = new Date();
+    public void setDireccionEnvio(String direccionEnvio) {
+        this.direccionEnvio = direccionEnvio;
+    }
 
-        for (Producto producto : usuario.getCarrito()) {
-            Comprar compra = new Comprar();
-            compra.setIdCliente(usuario.getId());
-            compra.setIdProducto(producto.getIdproducto());
-            compra.setCantidad(1); // Aquí podrías tener una cantidad específica por producto
-            compra.setPrecioUnitario(producto.getPrecio());
-            compra.setMetodoPago(metodoPago);
-            compra.setDireccionEnvio(direccionEnvio);
-            compra.setTelefonoContacto(telefonoContacto);
-            compra.setFechaCompra(fechaActual);
-            compra.setEstado("COMPLETADO");
+    public String getTelefonoContacto() {
+        return telefonoContacto;
+    }
 
-            compras.add(compra);
-        }
+    public void setTelefonoContacto(String telefonoContacto) {
+        this.telefonoContacto = telefonoContacto;
+    }
 
-        return compras;
+    public LocalDateTime getFechaCompra() {
+        return fechaCompra;
     }
 }

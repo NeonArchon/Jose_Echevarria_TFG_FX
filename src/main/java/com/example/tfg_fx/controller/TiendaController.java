@@ -1,24 +1,18 @@
 package com.example.tfg_fx.controller;
 
-import com.example.tfg_fx.model.DAO.DAO_Porducto;
-import com.example.tfg_fx.model.DAO.DAO_Usuario;
-import com.example.tfg_fx.model.entities.Producto;
-import com.example.tfg_fx.model.entities.Usuario;
+import com.example.tfg_fx.model.DAO.*;
+import com.example.tfg_fx.model.entities.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.*;
+import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import java.io.InputStream;
 import java.util.List;
 
@@ -29,7 +23,6 @@ public class TiendaController {
 
     private final DAO_Porducto daoProducto = new DAO_Porducto();
     private final DAO_Usuario daoUsuario = new DAO_Usuario();
-
     private Usuario usuarioActual;
 
     @FXML
@@ -127,7 +120,6 @@ public class TiendaController {
         HBox top = new HBox();
         top.setAlignment(Pos.TOP_RIGHT);
         top.setSpacing(10);
-
         // --- WISHLIST ---
         CheckBox checkWishlist = new CheckBox("❤");
         checkWishlist.setTooltip(new Tooltip("Añadir a Wishlist"));
@@ -158,17 +150,19 @@ public class TiendaController {
                 checkCarrito.setSelected(false);
                 return;
             }
-            if (checkCarrito.isSelected()) agregarAlCarrito(producto);
-            else eliminarDelCarrito(producto);
+            if (checkCarrito.isSelected()) {
+                agregarAlCarrito(producto);
+                abrirCarrito(); // 👈 SE ABRE AUTOMÁTICAMENTE EL CARRITO
+            } else {
+                eliminarDelCarrito(producto);
+            }
         });
 
         top.getChildren().addAll(checkWishlist, checkCarrito);
-
         // -----------------------------------------------------
         //  IMAGEN DEL PRODUCTO (corregido)
         // -----------------------------------------------------
         ImageView imagenView = new ImageView();
-
         try {
             InputStream is = getClass().getResourceAsStream("/com/example/tfg_fx/" + producto.getImagenUrl());
             if (is != null) {
@@ -181,7 +175,6 @@ public class TiendaController {
         imagenView.setFitHeight(120);
         imagenView.setFitWidth(120);
         imagenView.setPreserveRatio(true);
-
         // -----------------------------------------------------
         //  Texto: título, descripción, precio
         // -----------------------------------------------------
@@ -194,12 +187,10 @@ public class TiendaController {
 
         Label precio = new Label(String.format("%.2f €", producto.getPrecio()));
         precio.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
-
         // -----------------------------------------------------
         //  Evento → Abrir detalles
         // -----------------------------------------------------
         card.setOnMouseClicked(e -> abrirDetallesProducto(producto));
-
         // -----------------------------------------------------
         //  Añadir al contenedor principal
         // -----------------------------------------------------
@@ -222,6 +213,59 @@ public class TiendaController {
 
             Stage stage = new Stage();
             stage.setTitle("Detalles del Producto");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirPantallaPago() {
+        if (usuarioActual == null) {
+            error("Debes iniciar sesión para realizar una compra.");
+            return;
+        }
+
+        if (usuarioActual.getCarrito().isEmpty()) {
+            error("El carrito está vacío.");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/tfg_fx/pantalla-pago.fxml"));
+            Parent root = loader.load();
+
+            PagoController controller = loader.getController();
+            controller.setUsuario(usuarioActual);
+
+            Stage stage = new Stage();
+            stage.setTitle("Procesar Pago");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirCarrito() {
+        if (usuarioActual == null) {
+            error("Debes iniciar sesión.");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/tfg_fx/carrito-view.fxml"));
+            Parent root = loader.load();
+
+            CarritoController controller = loader.getController();
+            controller.setUsuario(usuarioActual);
+
+            Stage stage = new Stage();
+            stage.setTitle("Carrito");
             stage.setScene(new Scene(root));
             stage.show();
 
