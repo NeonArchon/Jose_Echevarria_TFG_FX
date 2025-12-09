@@ -11,6 +11,6 @@ public interface DAO_CompraTotal_Itf {
 
     List<CompraTotal> obtenerComprasPorUsuario(Long idUsuario);
 
-    public boolean registrarCompraTotal(CompraTotal compraTotal);
+    public void registrarCompraTotal(CompraTotal compraTotal);
 
 }

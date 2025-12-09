@@ -29,7 +29,6 @@ public class PantallaProductoController {
     @FXML private Button btnCarrito;
     @FXML private Button btnWishlist;
 
-    private Usuario usuario; // si aún no lo tienes
     private DAO_Comprar daoComprar = new DAO_Comprar();
     private DAO_CompraTotal daoCompraTotal = new DAO_CompraTotal();
 
@@ -184,9 +183,9 @@ public class PantallaProductoController {
         }
 
         // Crear compra total
-        CompraTotal compra = new CompraTotal();
-        compra.setUsuario(usuario);
-        compra.setFecha(LocalDate.now());
+        CompraTotal compraTotal = new CompraTotal();
+        compraTotal.setUsuario(usuarioActual);
+        compraTotal.setFecha(LocalDate.now());
 
         // Crear item individual
         Comprar item = new Comprar();
@@ -194,15 +193,16 @@ public class PantallaProductoController {
         item.setCantidad(1);
 
         // Relación bidireccional
-        compra.addItem(item);
+        compraTotal.addItem(item);
 
         // Guardar en BD
-        boolean ok = daoCompraTotal.registrarCompraTotal(compra);
+        daoCompraTotal.registrarCompraTotal(compraTotal);
+        /*boolean ok = daoCompraTotal.registrarCompraTotal(compraTotal);
         if (!ok) {
             Alert err = new Alert(Alert.AlertType.ERROR, "No se pudo registrar la compra. Inténtalo más tarde.");
             err.showAndWait();
             return;
-        }
+        }*/
 
         // Mensaje
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

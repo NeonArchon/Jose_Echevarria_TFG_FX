@@ -206,10 +206,16 @@ public class TiendaController {
 
             Parent root = loader.load();
 
+            /*
             Object controller = loader.getController();
             if (controller instanceof PantallaProductoController) {
                 ((PantallaProductoController) controller).cargarProducto(producto); // Llamar al método cargarProducto
             }
+            */
+
+            PantallaProductoController pController = loader.getController();
+            pController.setUsuarioActual(usuarioActual); // 👈 PASAMOS EL USUARIO
+            pController.cargarProducto(producto);        // 👈 LUEGO CARGAMOS EL PRODUCTO
 
             Stage stage = new Stage();
             stage.setTitle("Detalles del Producto");
@@ -222,6 +228,8 @@ public class TiendaController {
     }
 
     private void abrirPantallaPago() {
+
+
         if (usuarioActual == null) {
             error("Debes iniciar sesión para realizar una compra.");
             return;
@@ -251,6 +259,7 @@ public class TiendaController {
     }
 
     private void abrirCarrito() {
+
         if (usuarioActual == null) {
             error("Debes iniciar sesión.");
             return;
