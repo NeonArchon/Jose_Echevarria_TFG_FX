@@ -1,16 +1,22 @@
 package com.example.tfg_fx.controller;
 
+import com.example.tfg_fx.model.DAO.DAO_CompraTotal;
 import com.example.tfg_fx.model.DAO.DAO_Porducto;
 import com.example.tfg_fx.model.entities.Producto;
+import com.example.tfg_fx.model.entities.CompraTotal;
+import com.example.tfg_fx.model.entities.Comprar;
+import com.example.tfg_fx.model.DAO.DAO_Comprar;
+import com.example.tfg_fx.model.entities.Usuario;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import java.time.LocalDate;
 
 public class PantallaProductoController {
 
     @FXML private Label lblTitulo;
-    @FXML private Label lblSubtitulo; // Añadido para el subtítulo
+    @FXML private Label lblSubtitulo;
     @FXML private ImageView imgProducto;
     @FXML private Label lblDescripcion;
     @FXML private Label lblOferta; // Etiqueta para oferta
@@ -18,12 +24,16 @@ public class PantallaProductoController {
     @FXML private Label lblPrecio;
     @FXML private Label lblStock; // Cambiado de lblObjetos
     @FXML private Label lblTipo; // Cambiado de lblDimensiones
-    @FXML private Label lblDimensiones; // Nuevo para dimensiones reales
-    @FXML private Label lblPeso; // Nuevo para peso real
 
     @FXML private Button btnComprar;
     @FXML private Button btnCarrito;
     @FXML private Button btnWishlist;
+
+    private Usuario usuario; // si aún no lo tienes
+    private DAO_Comprar daoComprar = new DAO_Comprar();
+    private DAO_CompraTotal daoCompraTotal = new DAO_CompraTotal();
+
+    private Usuario usuarioActual;
 
     private Producto producto;
     private DAO_Porducto daoProducto = new DAO_Porducto();
@@ -33,6 +43,10 @@ public class PantallaProductoController {
         // Inicializar etiquetas como vacías
         lblSubtitulo.setText("WARHAMMER 40.000"); // Puedes hacerlo dinámico
         lblOferta.setVisible(false);
+    }
+
+    public void setUsuarioActual(Usuario usuario) {
+        this.usuarioActual = usuario;
     }
 
     public void cargarProducto(Producto producto) {
@@ -119,7 +133,7 @@ public class PantallaProductoController {
 
     private void configurarBotones() {
         // Comprar
-     //   btnComprar.setOnAction(e -> comprarProducto());
+         btnComprar.setOnAction(e -> comprarProducto());
 
         // Añadir/Quitar del carrito
         btnCarrito.setOnAction(e -> {
@@ -148,6 +162,54 @@ public class PantallaProductoController {
             alert.setContentText(estado ? "❤️ Producto añadido a Wishlist." : "💔 Producto eliminado de Wishlist.");
             alert.showAndWait();
         });
+    }
+
+    private void comprarProducto() {
+
+        if (usuarioActual == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setHeaderText("Iniciar sesión");
+            alerta.setContentText("Debes iniciar sesión para comprar.");
+            alerta.showAndWait();
+            return;
+        }
+
+        if (producto.getStock() <= 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Sin stock");
+            alert.setHeaderText(null);
+            alert.setContentText("Este producto no tiene stock disponible.");
+            alert.showAndWait();
+            return;
+        }
+
+        // Crear compra total
+        CompraTotal compra = new CompraTotal();
+        compra.setUsuario(usuario);
+        compra.setFecha(LocalDate.now());
+
+        // Crear item individual
+        Comprar item = new Comprar();
+        item.setProducto(producto);
+        item.setCantidad(1);
+
+        // Relación bidireccional
+        compra.addItem(item);
+
+        // Guardar en BD
+        boolean ok = daoCompraTotal.registrarCompraTotal(compra);
+        if (!ok) {
+            Alert err = new Alert(Alert.AlertType.ERROR, "No se pudo registrar la compra. Inténtalo más tarde.");
+            err.showAndWait();
+            return;
+        }
+
+        // Mensaje
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Compra realizada");
+        alert.setHeaderText(null);
+        alert.setContentText("Compra realizada con éxito.");
+        alert.showAndWait();
     }
 
 }

@@ -38,4 +38,19 @@ public class DAO_CompraTotal implements DAO_CompraTotal_Itf{
                     .getResultList();
         }
     }
+
+    @Override
+    public boolean registrarCompraTotal(CompraTotal compraTotal) {
+        Transaction tx = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            session.persist(compraTotal);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

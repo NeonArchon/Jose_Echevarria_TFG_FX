@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -8,129 +7,117 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.tfg_fx.controller.PantallaProductoController"
-            prefWidth="900" prefHeight="600"
-            style="-fx-background-color: #2c2c2c;">
+            prefWidth="1000" prefHeight="650"
+            style="-fx-background-color: #1d1d1d;">
 
-    <!-- CONTENIDO CENTRAL -->
     <center>
-        <HBox spacing="40" alignment="CENTER" BorderPane.alignment="CENTER">
+        <HBox spacing="60" alignment="CENTER">
             <padding>
                 <Insets top="40" bottom="40" left="40" right="40"/>
             </padding>
 
-            <!-- COLUMNA IZQUIERDA: IMAGEN + DESCRIPCIÓN -->
-            <VBox spacing="20" alignment="TOP_CENTER" prefWidth="450">
+            <!-- COLUMNA IZQUIERDA -->
+            <VBox spacing="25" alignment="TOP_CENTER" prefWidth="450">
 
-                <!-- TÍTULO -->
-                <VBox spacing="5" alignment="CENTER">
+                <!-- TÍTULO + SUBTÍTULO + OFERTA -->
+                <VBox spacing="8" alignment="CENTER">
                     <Label fx:id="lblTitulo"
-                           text=""
-                           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-alignment: center;"/>
+                           style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
 
                     <Label fx:id="lblSubtitulo"
-                           text=""
-                           style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffdf00; -fx-alignment: center;"/>
+                           style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ffdf00;"/>
 
-                    <!-- ETIQUETA DE OFERTA (SOLO VISIBLE SI HAY OFERTA) -->
                     <Label fx:id="lblOferta"
                            text="¡EN OFERTA!"
                            visible="false"
-                           style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ff0000; -fx-background-color: #fff; -fx-padding: 5 10; -fx-background-radius: 5;"/>
+                           style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ff0000;
+                                  -fx-background-color: #ffffff; -fx-padding: 6 12; -fx-background-radius: 8;"/>
                 </VBox>
 
-                <!-- IMAGEN -->
-                <BorderPane>
+                <!-- TARJETA DE IMAGEN -->
+                <BorderPane style="-fx-background-color: #262626; -fx-background-radius: 12; -fx-padding: 25;">
                     <ImageView fx:id="imgProducto"
-                               fitWidth="400"
+                               fitWidth="350"
                                preserveRatio="true"
-                               style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0, 0, 5);"/>
+                               style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 20, 0, 0, 5);"/>
                 </BorderPane>
 
                 <!-- DESCRIPCIÓN -->
-                <VBox spacing="10" alignment="TOP_LEFT" style="-fx-padding: 0 20;">
+                <VBox spacing="8" alignment="TOP_LEFT" style="-fx-padding: 0 15;">
                     <Label text="Descripción:"
                            style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffdf00;"/>
                     <Label fx:id="lblDescripcion"
-                           text=""
                            wrapText="true"
                            style="-fx-font-size: 14px; -fx-text-fill: #ffffff; -fx-line-spacing: 5px;"/>
                 </VBox>
 
             </VBox>
 
+
             <!-- SEPARADOR VERTICAL -->
-            <Separator orientation="VERTICAL" style="-fx-background-color: #555;"/>
+            <Separator orientation="VERTICAL"
+                       style="-fx-border-color: #444; -fx-border-width: 2;"/>
 
-            <!-- COLUMNA DERECHA: ESPECIFICACIONES -->
-            <VBox spacing="25" alignment="TOP_LEFT" prefWidth="350">
 
-                <Label text="ESPECIFICACIONES DEL PRODUCTO"
-                       style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #ffdf00; -fx-underline: true;"/>
+            <!-- COLUMNA DERECHA -->
+            <VBox spacing="30" alignment="TOP_LEFT" prefWidth="350">
 
-                <VBox spacing="15" style="-fx-padding: 0 0 0 10;">
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Precio:"
-                               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
-                        <Label fx:id="lblPrecio"
-                               text=""
-                               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ffdf00;"/>
+                <Label text="ESPECIFICACIONES"
+                       style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #ffdf00; -fx-underline: true;"/>
+
+                <VBox spacing="18" style="-fx-padding: 0 0 0 10;">
+
+                    <HBox spacing="10">
+                        <Label text="Precio:" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+                        <Label fx:id="lblPrecio" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #ffdf00;"/>
                     </HBox>
 
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Stock disponible:"
-                               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
-                        <Label fx:id="lblStock"
-                               text=""
-                               style="-fx-font-size: 16px; -fx-text-fill: #00ff00;"/>
+                    <HBox spacing="10">
+                        <Label text="Stock:" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+                        <Label fx:id="lblStock" style="-fx-font-size: 16px; -fx-text-fill: #00ff00;"/>
                     </HBox>
 
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Tipo:"
-                               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
-                        <Label fx:id="lblTipo"
-                               text=""
-                               style="-fx-font-size: 16px; -fx-text-fill: #ffffff;"/>
+                    <HBox spacing="10">
+                        <Label text="Tipo:" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+                        <Label fx:id="lblTipo" style="-fx-font-size: 16px; -fx-text-fill: #ffffff;"/>
                     </HBox>
 
-                    <!-- Dimensiones (podrías añadir este campo a tu entidad) -->
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Dimensiones:"
-                               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
-                        <Label fx:id="lblDimensiones"
-                               text=""
-                               style="-fx-font-size: 16px; -fx-text-fill: #ffffff;"/>
+                    <HBox spacing="10">
+                        <Label text="Dimensiones:" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+                        <Label fx:id="lblDimensiones" style="-fx-font-size: 16px; -fx-text-fill: #ffffff;"/>
                     </HBox>
 
-                    <!-- Peso (podrías añadir este campo a tu entidad) -->
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Peso:"
-                               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
-                        <Label fx:id="lblPeso"
-                               text=""
-                               style="-fx-font-size: 16px; -fx-text-fill: #ffffff;"/>
+                    <HBox spacing="10">
+                        <Label text="Peso:" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+                        <Label fx:id="lblPeso" style="-fx-font-size: 16px; -fx-text-fill: #ffffff;"/>
                     </HBox>
+
                 </VBox>
 
                 <!-- BOTONES -->
-                <VBox spacing="15" alignment="CENTER" style="-fx-padding: 20 0 0 0;">
+                <VBox spacing="18" alignment="CENTER">
                     <Button fx:id="btnComprar"
                             text="COMPRAR"
-                            prefWidth="250"
-                            style="-fx-background-color: #731b5c; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 15 30; -fx-background-radius: 5;"/>
+                            prefWidth="300"
+                            style="-fx-background-color: #8a2a6f; -fx-text-fill: white;
+                                   -fx-font-size: 18px; -fx-font-weight: bold;
+                                   -fx-padding: 18 30; -fx-background-radius: 10;"/>
 
-                    <HBox spacing="15" alignment="CENTER">
+                    <HBox spacing="20" alignment="CENTER">
                         <Button fx:id="btnCarrito"
                                 text="AÑADIR AL CARRITO"
-                                style="-fx-background-color: #ffdf00; -fx-text-fill: black; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                                style="-fx-background-color: #ffdf00; -fx-text-fill: black;
+                                       -fx-font-size: 14px; -fx-font-weight: bold;
+                                       -fx-padding: 10 20; -fx-background-radius: 8;"/>
 
                         <Button fx:id="btnWishlist"
                                 text="WISHLIST"
-                                style="-fx-background-color: #ffffff; -fx-text-fill: black; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                                style="-fx-background-color: #ffffff; -fx-text-fill: black;
+                                       -fx-font-size: 14px; -fx-font-weight: bold;
+                                       -fx-padding: 10 20; -fx-background-radius: 8;"/>
                     </HBox>
                 </VBox>
-
             </VBox>
-
         </HBox>
     </center>
 
